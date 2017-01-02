@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="86824aba46b0489d834d9eca6f324642" Name="Tests" ZoomLevel="67" >
+        <EntityTypeShape EntityType="FactoriesManager.Model.TestSource" Width="1.5" PointX="2.125" PointY="2.25" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.TestReport" Width="1.875" PointX="5" PointY="2.25" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.TestRunResult" Width="1.5" PointX="8.25" PointY="2.25" />
+        <AssociationConnector Association="FactoriesManager.Model.ResultToReport" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Test" Width="1.875" PointX="5" PointY="5" FillColor="Teal" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Tag" Width="1.75" PointX="5.125" PointY="7.75" FillColor="Gray" />
+        <AssociationConnector Association="FactoriesManager.Model.TestToCategories" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Branch" Width="1.5" PointX="3" PointY="10.625" FillColor="Gray" />
+        <InheritanceConnector EntityType="FactoriesManager.Model.Branch" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Client" Width="1.5" PointX="7.5" PointY="10.625" FillColor="Gray" />
+        <InheritanceConnector EntityType="FactoriesManager.Model.Client" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Impact" Width="1.5" PointX="9.75" PointY="10.625" FillColor="Gray" />
+        <InheritanceConnector EntityType="FactoriesManager.Model.Impact" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Asset" Width="1.5" PointX="5.25" PointY="10.625" FillColor="Gray" />
+        <InheritanceConnector EntityType="FactoriesManager.Model.Asset" />
+        <EntityTypeShape EntityType="FactoriesManager.Model.Category" Width="1.5" PointX="0.75" PointY="10.625" FillColor="Gray" />
+        <InheritanceConnector EntityType="FactoriesManager.Model.Category" />
+        <AssociationConnector Association="FactoriesManager.Model.TestSourceTestReport" />
+        <AssociationConnector Association="FactoriesManager.Model.TestReportTestRunResult" />
+        <AssociationConnector Association="FactoriesManager.Model.TestSourceTest" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

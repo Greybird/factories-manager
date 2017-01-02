@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FactoriesManager.Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="FactoriesManagerModelStoreContainer">
+    <EntitySet Name="TestSources" EntityType="FactoriesManager.Model.Store.TestSources" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestReports" EntityType="FactoriesManager.Model.Store.TestReports" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestRunResults" EntityType="FactoriesManager.Model.Store.TestRunResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tests" EntityType="FactoriesManager.Model.Store.Tests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags" EntityType="FactoriesManager.Model.Store.Tags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags_Branch" EntityType="FactoriesManager.Model.Store.Tags_Branch" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags_Client" EntityType="FactoriesManager.Model.Store.Tags_Client" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags_Impact" EntityType="FactoriesManager.Model.Store.Tags_Impact" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags_Asset" EntityType="FactoriesManager.Model.Store.Tags_Asset" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags_Category" EntityType="FactoriesManager.Model.Store.Tags_Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestToCategories" EntityType="FactoriesManager.Model.Store.TestToCategories" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TestToCategories_Category" Association="FactoriesManager.Model.Store.FK_TestToCategories_Category">
+      <End Role="Category" EntitySet="Tags" />
+      <End Role="TestToCategories" EntitySet="TestToCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestToCategories_Test" Association="FactoriesManager.Model.Store.FK_TestToCategories_Test">
+      <End Role="Test" EntitySet="Tests" />
+      <End Role="TestToCategories" EntitySet="TestToCategories" />
+    </AssociationSet>
+    <AssociationSet Name="TestSourceTestReport" Association="FactoriesManager.Model.Store.TestSourceTestReport">
+      <End Role="TestSource" EntitySet="TestSources" />
+      <End Role="TestReport" EntitySet="TestReports" />
+    </AssociationSet>
+    <AssociationSet Name="TestReportTestRunResult" Association="FactoriesManager.Model.Store.TestReportTestRunResult">
+      <End Role="TestReport" EntitySet="TestReports" />
+      <End Role="TestRunResult" EntitySet="TestRunResults" />
+    </AssociationSet>
+    <AssociationSet Name="TestSourceTest" Association="FactoriesManager.Model.Store.TestSourceTest">
+      <End Role="TestSource" EntitySet="TestSources" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Branch_inherits_Tag" Association="FactoriesManager.Model.Store.FK_Branch_inherits_Tag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="Branch" EntitySet="Tags_Branch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_inherits_Tag" Association="FactoriesManager.Model.Store.FK_Client_inherits_Tag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="Client" EntitySet="Tags_Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Impact_inherits_Tag" Association="FactoriesManager.Model.Store.FK_Impact_inherits_Tag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="Impact" EntitySet="Tags_Impact" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Asset_inherits_Tag" Association="FactoriesManager.Model.Store.FK_Asset_inherits_Tag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="Asset" EntitySet="Tags_Asset" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Category_inherits_Tag" Association="FactoriesManager.Model.Store.FK_Category_inherits_Tag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="Category" EntitySet="Tags_Category" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TestSources">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="LastReportId" Type="int" Nullable="false" />
+    <Property Name="RowVersion" Type="binary" StoreGeneratedPattern="Computed" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="TestReports">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Status" Type="smallint" Nullable="false" />
+    <Property Name="LastRunResultId" Type="int" Nullable="false" />
+    <Property Name="RowVersion" Type="binary" StoreGeneratedPattern="Computed" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="TestRunResults">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ReportId" />
+      <PropertyRef Name="SourceName" />
+    </Key>
+    <Property Name="SourceName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ReportId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RowVersion" Type="binary" StoreGeneratedPattern="Computed" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="Tests">
+    <Key>
+      <PropertyRef Name="FullName" />
+    </Key>
+    <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="4000" />
+    <Property Name="SourceName" Type="varchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags_Branch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags_Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags_Impact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags_Asset">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags_Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestToCategories">
+    <Key>
+      <PropertyRef Name="Tags_Id" />
+      <PropertyRef Name="Test_FullName" />
+    </Key>
+    <Property Name="Tags_Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Test_FullName" Type="varchar" Nullable="false" MaxLength="4000" />
+  </EntityType>
+  <Association Name="TestSourceTestReport">
+    <End Role="TestSource" Type="FactoriesManager.Model.Store.TestSources" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TestReport" Type="FactoriesManager.Model.Store.TestReports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestSource">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="TestReport">
+        <PropertyRef Name="Name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestReportTestRunResult">
+    <End Role="TestReport" Type="FactoriesManager.Model.Store.TestReports" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TestRunResult" Type="FactoriesManager.Model.Store.TestRunResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestReport">
+        <PropertyRef Name="Id" />
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="TestRunResult">
+        <PropertyRef Name="ReportId" />
+        <PropertyRef Name="SourceName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestSourceTest">
+    <End Role="TestSource" Type="FactoriesManager.Model.Store.TestSources" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Test" Type="FactoriesManager.Model.Store.Tests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestSource">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="SourceName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestToCategories_Category">
+    <End Role="Category" Type="FactoriesManager.Model.Store.Tags" Multiplicity="1" />
+    <End Role="TestToCategories" Type="FactoriesManager.Model.Store.TestToCategories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestToCategories">
+        <PropertyRef Name="Tags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestToCategories_Test">
+    <End Role="TestToCategories" Type="FactoriesManager.Model.Store.TestToCategories" Multiplicity="*" />
+    <End Role="Test" Type="FactoriesManager.Model.Store.Tests" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Test">
+        <PropertyRef Name="FullName" />
+      </Principal>
+      <Dependent Role="TestToCategories">
+        <PropertyRef Name="Test_FullName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Branch_inherits_Tag">
+    <End Role="Tag" Type="FactoriesManager.Model.Store.Tags" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Branch" Type="FactoriesManager.Model.Store.Tags_Branch" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_inherits_Tag">
+    <End Role="Tag" Type="FactoriesManager.Model.Store.Tags" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Client" Type="FactoriesManager.Model.Store.Tags_Client" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Impact_inherits_Tag">
+    <End Role="Tag" Type="FactoriesManager.Model.Store.Tags" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Impact" Type="FactoriesManager.Model.Store.Tags_Impact" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Impact">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Asset_inherits_Tag">
+    <End Role="Tag" Type="FactoriesManager.Model.Store.Tags" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asset" Type="FactoriesManager.Model.Store.Tags_Asset" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Asset">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Category_inherits_Tag">
+    <End Role="Tag" Type="FactoriesManager.Model.Store.Tags" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Category" Type="FactoriesManager.Model.Store.Tags_Category" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="FactoriesManager.Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TestsModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TestSources" EntityType="FactoriesManager.Model.TestSource" />
+          <EntitySet Name="TestReports" EntityType="FactoriesManager.Model.TestReport" />
+          <EntitySet Name="TestRunResults" EntityType="FactoriesManager.Model.TestRunResult" />
+          <EntitySet Name="Tests" EntityType="FactoriesManager.Model.Test" />
+          <AssociationSet Name="TestToCategories" Association="FactoriesManager.Model.TestToCategories">
+            <End Role="Category" EntitySet="Tags" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <EntitySet Name="Tags" EntityType="FactoriesManager.Model.Tag" />
+          <AssociationSet Name="TestSourceTestReport" Association="FactoriesManager.Model.TestSourceTestReport">
+            <End Role="TestSource" EntitySet="TestSources" />
+            <End Role="TestReport" EntitySet="TestReports" />
+          </AssociationSet>
+          <AssociationSet Name="TestReportTestRunResult" Association="FactoriesManager.Model.TestReportTestRunResult">
+            <End Role="TestReport" EntitySet="TestReports" />
+            <End Role="TestRunResult" EntitySet="TestRunResults" />
+          </AssociationSet>
+          <AssociationSet Name="TestSourceTest" Association="FactoriesManager.Model.TestSourceTest">
+            <End Role="TestSource" EntitySet="TestSources" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TestSource">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" Unicode="false" MaxLength="500" />
+          <NavigationProperty Name="TestReports" Relationship="FactoriesManager.Model.TestSourceTestReport" FromRole="TestSource" ToRole="TestReport" />
+          <Property Name="LastReportId" Type="Int32" Nullable="false" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" ConcurrencyMode="Fixed" FixedLength="true" MaxLength="8" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Tests" Relationship="FactoriesManager.Model.TestSourceTest" FromRole="TestSource" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="TestReport">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" Unicode="false" MaxLength="500" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Status" Type="FactoriesManager.Model.ReportStatus" Nullable="false" />
+          <NavigationProperty Name="TestSource" Relationship="FactoriesManager.Model.TestSourceTestReport" FromRole="TestReport" ToRole="TestSource" />
+          <Property Name="LastRunResultId" Type="Int32" Nullable="false" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" ConcurrencyMode="Fixed" annotation:StoreGeneratedPattern="Computed" FixedLength="true" MaxLength="8" />
+          <NavigationProperty Name="TestRunResults" Relationship="FactoriesManager.Model.TestReportTestRunResult" FromRole="TestReport" ToRole="TestRunResult" />
+        </EntityType>
+        <EntityType Name="TestRunResult">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ReportId" />
+            <PropertyRef Name="SourceName" />
+          </Key>
+          <Property Name="SourceName" Type="String" Nullable="false" Unicode="false" MaxLength="900" />
+          <Property Name="ReportId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Content" Type="String" Nullable="false" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" ConcurrencyMode="Fixed" FixedLength="true" MaxLength="8" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="TestReport" Relationship="FactoriesManager.Model.TestReportTestRunResult" FromRole="TestRunResult" ToRole="TestReport" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="FullName" />
+          </Key>
+          <Property Name="FullName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" Unicode="false" MaxLength="4000" />
+          <NavigationProperty Name="Tags" Relationship="FactoriesManager.Model.TestToCategories" FromRole="Test" ToRole="Category" />
+          <NavigationProperty Name="TestSource" Relationship="FactoriesManager.Model.TestSourceTest" FromRole="Test" ToRole="TestSource" />
+          <Property Name="SourceName" Type="String" Nullable="false" Unicode="false" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Tag" Abstract="true">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Test" Relationship="FactoriesManager.Model.TestToCategories" FromRole="Category" ToRole="Test" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="TestToCategories">
+          <End Type="FactoriesManager.Model.Tag" Role="Category" Multiplicity="*" />
+          <End Type="FactoriesManager.Model.Test" Role="Test" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Branch" BaseType="FactoriesManager.Model.Tag" />
+        <EntityType Name="Client" BaseType="FactoriesManager.Model.Tag" />
+        <EntityType Name="Impact" BaseType="FactoriesManager.Model.Tag" />
+        <EntityType Name="Asset" BaseType="FactoriesManager.Model.Tag" />
+        <EntityType Name="Category" BaseType="FactoriesManager.Model.Tag" />
+        <EnumType Name="ReportStatus" UnderlyingType="Int16">
+          <Member Name="Created" Value="0" />
+          <Member Name="Processing" Value="1" />
+          <Member Name="Closed" Value="2" />
+          <Member Name="Error" Value="3" />
+        </EnumType>
+        <Association Name="TestSourceTestReport">
+          <End Type="FactoriesManager.Model.TestSource" Role="TestSource" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FactoriesManager.Model.TestReport" Role="TestReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSource">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TestReport">
+              <PropertyRef Name="Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestReportTestRunResult">
+          <End Type="FactoriesManager.Model.TestReport" Role="TestReport" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FactoriesManager.Model.TestRunResult" Role="TestRunResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestReport">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TestRunResult">
+              <PropertyRef Name="ReportId" />
+              <PropertyRef Name="SourceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestSourceTest">
+          <End Type="FactoriesManager.Model.TestSource" Role="TestSource" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FactoriesManager.Model.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSource">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="SourceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FactoriesManagerModelStoreContainer" CdmEntityContainer="TestsModelContainer">
+    <EntitySetMapping Name="TestSources">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.TestSource)">
+        <MappingFragment StoreEntitySet="TestSources">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastReportId" ColumnName="LastReportId" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestReports">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.TestReport)">
+        <MappingFragment StoreEntitySet="TestReports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LastRunResultId" ColumnName="LastRunResultId" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestRunResults">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.TestRunResult)">
+        <MappingFragment StoreEntitySet="TestRunResults">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+          <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tests">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Test)">
+        <MappingFragment StoreEntitySet="Tests">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Tag)">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Branch)">
+        <MappingFragment StoreEntitySet="Tags_Branch">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Client)">
+        <MappingFragment StoreEntitySet="Tags_Client">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Impact)">
+        <MappingFragment StoreEntitySet="Tags_Impact">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Asset)">
+        <MappingFragment StoreEntitySet="Tags_Asset">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(FactoriesManager.Model.Category)">
+        <MappingFragment StoreEntitySet="Tags_Category">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TestToCategories" TypeName="FactoriesManager.Model.TestToCategories" StoreEntitySet="TestToCategories">
+      <EndProperty Name="Category">
+        <ScalarProperty Name="Id" ColumnName="Tags_Id" />
+      </EndProperty>
+      <EndProperty Name="Test">
+        <ScalarProperty Name="FullName" ColumnName="Test_FullName" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
